@@ -1,0 +1,84 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: rgb(230, 230, 230);
+}
+
+.todo-container {
+  height: auto;
+  padding: 20px;
+  max-width: 600px;
+  width: 100%;
+  background-color: white;
+  margin: 0 auto;
+  border-radius: 10px;
+}
+.todo-input {
+  padding: 10px 20px;
+  background-color: aliceblue;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.todo-input input {
+  padding: 10px;
+  width: 100%;
+  border: none;
+  font-size: 25px;
+  background-color: transparent;
+}
+.todo-input input:focus {
+  outline: none;
+}
+
+#add-todo-btn {
+  font-size: 30px;
+  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  flex-shrink: none;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.822);
+  cursor: pointer;
+}
+
+.todo-list {
+  padding: 20px;
+}
+
+li {
+  list-style: none;
+  padding: 10px 10px;
+  margin: 10px 0;
+  font-size: 25px;
+  position: relative;
+}
+
+li:hover {
+  background-color: rgb(209, 209, 209);
+  cursor: pointer;
+}
+
+.closeBtn {
+  cursor: pointer;
+  padding: 10px;
+  position: absolute;
+  color: black;
+  font-size: 30px;
+  font-weight: 700;
+  right: 0;
+  top: 0;
+  transition: all 0.5s;
+}
+
+.closeBtn:hover {
+  /* font-size: 40px; */
+  transform: rotate(90deg);
+}
