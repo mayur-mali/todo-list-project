@@ -11,10 +11,10 @@ body {
 .todo-container {
   height: auto;
   padding: 20px;
-  max-width: 600px;
+  max-width: 700px;
   width: 100%;
   background-color: white;
-  margin: 0 auto;
+  margin: 10px auto;
   border-radius: 10px;
 }
 .todo-input {
@@ -26,7 +26,7 @@ body {
 }
 .todo-input input {
   padding: 10px;
-  width: 100%;
+  width: 75%;
   border: none;
   font-size: 25px;
   background-color: transparent;
@@ -50,7 +50,7 @@ body {
 }
 
 .todo-list {
-  padding: 20px;
+  padding: 20px 0;
 }
 
 li {
@@ -79,6 +79,5 @@ li:hover {
 }
 
 .closeBtn:hover {
-  /* font-size: 40px; */
   transform: rotate(90deg);
 }
