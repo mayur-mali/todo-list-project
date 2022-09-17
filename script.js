@@ -1,4 +1,5 @@
 var todoContainer = document.getElementById("myList");
+
 const LIST_KEY = "todo.list";
 
 let lists = JSON.parse(localStorage.getItem(LIST_KEY)) || [];
@@ -32,7 +33,7 @@ function save() {
 }
 
 function createTodo(todoItem) {
-  return { id: Date.now().toString(), todo: todoItem, isComplete: false };
+  return { id: Date.now().toString(), todo: todoItem };
 }
 
 function fetchTodoList() {
@@ -43,32 +44,13 @@ function fetchTodoList() {
   for (let i = 0; i < lists.length; i++) {
     console.log(lists[i].todo);
     todoContainer.innerHTML += `
-    <li data-todo-id=${lists[i].id}>
-    <input type="checkbox"  id="checkbox" />
-        ${lists[i].todo}
+    <li data-todo-id=${lists[i].id}">
+    <input type="checkbox"  onchange="checkTodo(${lists[i].id})" />
+      <h3 class="task-des" id="${lists[i].id}">${lists[i].todo}</h3>  
         <span class="closeBtn" >\u00D7</span>
     </li>
     `;
   }
-
-  // lists.forEach((list) => {
-  //   const listElement = document.createElement("li");
-  //   listElement.dataset.todoId = list.id;
-  //   listElement.innerText = list.todo;
-  //   todoContainer.appendChild(listElement);
-  // });
-
-  // var myNodelist = document.getElementsByTagName("li");
-  // var i;
-  // for (i = 0; i < myNodelist.length; i++) {
-  //   var span = document.createElement("SPAN");
-  //   var checkbox = document.createElement("INPUT");
-  //   var txt = document.createTextNode("\u00D7");
-  //   span.className = "closeBtn";
-  //   span.appendChild(txt);
-  //   myNodelist[i].appendChild(span);
-  //   myNodelist[i].appendChild(checkbox);
-  // }
 
   for (var i = 0; i < deleteTodoBtn.length; i++) {
     deleteTodoBtn[i].onclick = function () {
@@ -77,6 +59,15 @@ function fetchTodoList() {
       this.parentNode.remove();
     };
   }
+}
+
+function checkTodo(id) {
+  var task = document.querySelectorAll(".task-des");
+  task.forEach((item) => {
+    if (item.id == id) {
+      item.classList.toggle("checked");
+    }
+  });
 }
 
 function deleteTodo(id) {
