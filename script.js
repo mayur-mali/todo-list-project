@@ -41,34 +41,17 @@ function fetchTodoList() {
     lists.length + " task pending";
 
   for (let i = 0; i < lists.length; i++) {
-    console.log(lists[i].todo);
     todoContainer.innerHTML += `
     <li data-todo-id=${lists[i].id}>
-    <input type="checkbox"  id="checkbox" />
-        ${lists[i].todo}
-        <span class="closeBtn" >\u00D7</span>
+    <label class="container">
+      <input type="checkbox" id="${lists[i].id}" >
+      <span class="checkmark"></span>
+      <h3>  ${lists[i].todo}</h3>
+      </label>
+    <span class="closeBtn" >\u00D7</span>
     </li>
     `;
   }
-
-  // lists.forEach((list) => {
-  //   const listElement = document.createElement("li");
-  //   listElement.dataset.todoId = list.id;
-  //   listElement.innerText = list.todo;
-  //   todoContainer.appendChild(listElement);
-  // });
-
-  // var myNodelist = document.getElementsByTagName("li");
-  // var i;
-  // for (i = 0; i < myNodelist.length; i++) {
-  //   var span = document.createElement("SPAN");
-  //   var checkbox = document.createElement("INPUT");
-  //   var txt = document.createTextNode("\u00D7");
-  //   span.className = "closeBtn";
-  //   span.appendChild(txt);
-  //   myNodelist[i].appendChild(span);
-  //   myNodelist[i].appendChild(checkbox);
-  // }
 
   for (var i = 0; i < deleteTodoBtn.length; i++) {
     deleteTodoBtn[i].onclick = function () {
@@ -77,6 +60,15 @@ function fetchTodoList() {
       this.parentNode.remove();
     };
   }
+
+  const cb = document.querySelectorAll('input[type="checkbox"]');
+
+  cb.forEach((checkbox) => {
+    checkbox.addEventListener("change", function (e) {
+      var check = checkbox.checked;
+      isComplete(checkbox.id, check);
+    });
+  });
 }
 
 function deleteTodo(id) {
@@ -87,6 +79,21 @@ function deleteTodo(id) {
   }
   localStorage.setItem(LIST_KEY, JSON.stringify(todos));
   document.location.href = "/";
+}
+
+function isComplete(id, check) {
+  const todos = JSON.parse(localStorage.getItem("todo.list"));
+  const todoIndex = todos.findIndex((todo) => todo.id == id);
+  let completeTodo;
+
+  check
+    ? (completeTodo = { ...todos[todoIndex], isComplete: true })
+    : (completeTodo = { ...todos[todoIndex], isComplete: false });
+
+  console.log(id, { completeTodo });
+
+  // localStorage.setItem(LIST_KEY, JSON.stringify(...todos, completeTodo));
+  // document.location.href = "/";
 }
 
 function clearContent(element) {

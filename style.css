@@ -61,9 +61,59 @@ li {
   position: relative;
 }
 
-li:hover {
-  background-color: rgb(209, 209, 209);
+.container {
   cursor: pointer;
+}
+
+.container h3 {
+  margin-left: 30px;
+}
+
+.container input {
+  position: absolute;
+  top: 0;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.checkmark {
+  position: absolute;
+  width: 25px;
+  top: 15px;
+  left: 0;
+  height: 25px;
+  background-color: rgb(235, 235, 235);
+  border-radius: 50%;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.container input:checked ~ h3 {
+  text-decoration: line-through;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 15px;
+  top: -4px;
+  width: 5px;
+  height: 20px;
+  border: solid rgb(2, 2, 2);
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 
 .closeBtn {
