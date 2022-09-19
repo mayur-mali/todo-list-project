@@ -61,10 +61,10 @@ function fetchTodoList() {
     };
   }
 
-  const cb = document.querySelectorAll('input[type="checkbox"]');
+  const checkbox = document.querySelectorAll('input[type="checkbox"]');
 
-  cb.forEach((checkbox) => {
-    checkbox.addEventListener("change", function (e) {
+  checkbox.forEach((checkbox) => {
+    checkbox.addEventListener("change", function () {
       var check = checkbox.checked;
       isComplete(checkbox.id, check);
     });
@@ -83,17 +83,12 @@ function deleteTodo(id) {
 
 function isComplete(id, check) {
   const todos = JSON.parse(localStorage.getItem("todo.list"));
-  const todoIndex = todos.findIndex((todo) => todo.id == id);
-  let completeTodo;
-
-  check
-    ? (completeTodo = { ...todos[todoIndex], isComplete: true })
-    : (completeTodo = { ...todos[todoIndex], isComplete: false });
-
-  console.log(id, { completeTodo });
-
-  // localStorage.setItem(LIST_KEY, JSON.stringify(...todos, completeTodo));
-  // document.location.href = "/";
+  for (var i = 0; i < todos.length; i++) {
+    if (todos[i].id == id) {
+      check ? (todos[i].isComplete = true) : (todos[i].isComplete = false);
+      localStorage.setItem(LIST_KEY, JSON.stringify(todos));
+    }
+  }
 }
 
 function clearContent(element) {
