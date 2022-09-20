@@ -3,6 +3,17 @@ const LIST_KEY = "todo.list";
 
 let lists = JSON.parse(localStorage.getItem(LIST_KEY)) || [];
 let deleteTodoBtn = document.getElementsByClassName("closeBtn");
+filters = document.querySelectorAll(".status-filter span");
+
+filters.forEach((task) => {
+  task.addEventListener("click", function () {
+    document.querySelector("span.active").classList.remove("active");
+    task.classList.add("active");
+    fetchTodoList(task.id);
+
+    // console.log(task.id);
+  });
+});
 
 var todoAddBtn = document.getElementById("add-todo-btn");
 todoAddBtn.addEventListener("click", function () {
@@ -32,26 +43,32 @@ function save() {
 }
 
 function createTodo(todoItem) {
-  return { id: Date.now().toString(), todo: todoItem, isComplete: false };
+  return { id: Date.now().toString(), todo: todoItem, isComplete: "pending" };
 }
 
-function fetchTodoList() {
+function fetchTodoList(filter) {
   clearContent(todoContainer);
-  document.getElementById("left-task").innerHTML =
-    lists.length + " task pending";
-
-  for (let i = 0; i < lists.length; i++) {
-    todoContainer.innerHTML += `
-    <li data-todo-id=${lists[i].id}>
-    <label class="container">
-      <input type="checkbox" id="${lists[i].id}" >
-      <span class="checkmark"></span>
-      <h3>  ${lists[i].todo}</h3>
-      </label>
-    <span class="closeBtn" >\u00D7</span>
-    </li>
-    `;
+  document.getElementById("left-task").innerHTML = lists.length + " task left";
+  let li = "";
+  if (lists) {
+    lists.forEach((list, id) => {
+      var status = list.isComplete == "complete" ? "checked" : "pending";
+      if (filter == list.isComplete || filter == "all") {
+        li += `
+        <li data-todo-id=${list.id}>
+        <label class="container">
+        <input type="checkbox" id="${id}" onclick="isComplete(this)" ${status}>
+        <span class="checkmark"></span>
+        <h3>  ${list.todo}</h3>
+        </label>
+      <span class="closeBtn" >\u00D7</span>
+      </li>
+      `;
+      }
+    });
   }
+
+  todoContainer.innerHTML = li || `<span>No task </span>`;
 
   for (var i = 0; i < deleteTodoBtn.length; i++) {
     deleteTodoBtn[i].onclick = function () {
@@ -60,15 +77,6 @@ function fetchTodoList() {
       this.parentNode.remove();
     };
   }
-
-  const checkbox = document.querySelectorAll('input[type="checkbox"]');
-
-  checkbox.forEach((checkbox) => {
-    checkbox.addEventListener("change", function () {
-      var check = checkbox.checked;
-      isComplete(checkbox.id, check);
-    });
-  });
 }
 
 function deleteTodo(id) {
@@ -81,14 +89,14 @@ function deleteTodo(id) {
   document.location.href = "/";
 }
 
-function isComplete(id, check) {
-  const todos = JSON.parse(localStorage.getItem("todo.list"));
-  for (var i = 0; i < todos.length; i++) {
-    if (todos[i].id == id) {
-      check ? (todos[i].isComplete = true) : (todos[i].isComplete = false);
-      localStorage.setItem(LIST_KEY, JSON.stringify(todos));
-    }
+function isComplete(seletedTask) {
+  if (seletedTask.checked) {
+    lists[seletedTask.id].isComplete = "complete";
+  } else {
+    lists[seletedTask.id].isComplete = "pending";
   }
+
+  localStorage.setItem(LIST_KEY, JSON.stringify(lists));
 }
 
 function clearContent(element) {
@@ -98,6 +106,6 @@ function clearContent(element) {
 }
 
 function render() {
-  fetchTodoList();
+  fetchTodoList("all");
 }
 render();

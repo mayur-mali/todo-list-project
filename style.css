@@ -131,3 +131,27 @@ li {
 .closeBtn:hover {
   transform: rotate(90deg);
 }
+
+.filter-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.status-filter {
+  width: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.status-filter span {
+  text-transform: capitalize;
+  cursor: pointer;
+  color: #898989;
+}
+
+.active {
+  font-weight: 700;
+  color: black !important;
+}
