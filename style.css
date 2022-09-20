@@ -35,6 +35,10 @@ body {
   outline: none;
 }
 
+img {
+  width: 40px;
+}
+
 #add-todo-btn {
   font-size: 30px;
   border-radius: 100%;
@@ -61,12 +65,17 @@ li {
   position: relative;
 }
 
+li:hover {
+  background-color: rgba(144, 91, 182, 0.438);
+  border-radius: 5px;
+}
+
 .container {
   cursor: pointer;
 }
 
 .container h3 {
-  margin-left: 30px;
+  margin-left: 45px;
 }
 
 .container input {
@@ -81,7 +90,7 @@ li {
   position: absolute;
   width: 25px;
   top: 15px;
-  left: 0;
+  left: 15px;
   height: 25px;
   background-color: rgb(235, 235, 235);
   border-radius: 50%;
@@ -101,6 +110,7 @@ li {
 
 .container input:checked ~ h3 {
   text-decoration: line-through;
+  color: #898989;
 }
 
 /* Style the checkmark/indicator */
@@ -126,6 +136,11 @@ li {
   right: 0;
   top: 0;
   transition: all 0.5s;
+  opacity: 0;
+}
+
+li:hover > .closeBtn {
+  opacity: 1;
 }
 
 .closeBtn:hover {
@@ -154,4 +169,15 @@ li {
 .active {
   font-weight: 700;
   color: black !important;
+}
+
+.task-action {
+  display: flex;
+  justify-content: space-between;
+  color: #898989;
+  margin-top: 15px;
+}
+
+.task-action h4 {
+  cursor: pointer;
 }

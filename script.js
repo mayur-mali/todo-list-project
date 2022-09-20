@@ -26,7 +26,7 @@ function addToDoToList() {
   if (todoValues == null || todoValues.length === 0) return;
   const list = createTodo(todoValues);
   lists.push(list);
-  fetchTodoList();
+  fetchTodoList("all");
   save();
 }
 
@@ -80,13 +80,14 @@ function fetchTodoList(filter) {
 }
 
 function deleteTodo(id) {
+  // console.log(id);
   const todos = JSON.parse(localStorage.getItem("todo.list"));
   const todoIndex = todos.findIndex((todo) => todo.id === id);
   if (todoIndex !== -1) {
     deleteItem = todos.splice(todoIndex, 1);
   }
   localStorage.setItem(LIST_KEY, JSON.stringify(todos));
-  document.location.href = "/";
+  // document.location.reload();
 }
 
 function isComplete(seletedTask) {
@@ -95,9 +96,18 @@ function isComplete(seletedTask) {
   } else {
     lists[seletedTask.id].isComplete = "pending";
   }
-
   localStorage.setItem(LIST_KEY, JSON.stringify(lists));
 }
+
+function markAllCompleted() {
+  for (var i = 0; i < lists.length; i++) {
+    lists[i].isComplete = "complete";
+  }
+  localStorage.setItem(LIST_KEY, JSON.stringify(lists));
+  document.location.reload();
+}
+
+function clearCompleted() {}
 
 function clearContent(element) {
   while (element.firstChild) {
