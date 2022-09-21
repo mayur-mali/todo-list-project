@@ -1,35 +1,55 @@
 var todoContainer = document.getElementById("myList");
 const LIST_KEY = "todo.list";
 
+// setting up the localStorage
 let lists = JSON.parse(localStorage.getItem(LIST_KEY)) || [];
+
+//get access of deleteButton
 let deleteTodoBtn = document.getElementsByClassName("closeBtn");
+
+// get filter
 filters = document.querySelectorAll(".status-filter span");
 
+// filter by status
 filters.forEach((task) => {
   task.addEventListener("click", function () {
     document.querySelector("span.active").classList.remove("active");
     task.classList.add("active");
     fetchTodoList(task.id);
-
-    // console.log(task.id);
   });
 });
 
+// get access of todo_add_button
 var todoAddBtn = document.getElementById("add-todo-btn");
+
+// add event listener to add button
 todoAddBtn.addEventListener("click", function () {
+  // add todo in list
   addToDoToList();
+
+  // clear input after todo_created
   document.querySelector("input").value = "";
 });
 
+// add todo_into list function
 function addToDoToList() {
-  let todoValues = document.querySelector("input").value;
-  if (todoValues == null || todoValues.length === 0) return;
-  const list = createTodo(todoValues);
-  lists.push(list);
-  fetchTodoList("all");
-  save();
-}
+  // get input value
+  let todoValue = document.querySelector("input").value;
+  // check if input is not empty if it's empty then return back and nothing add into list
+  if (todoValue == null || todoValue.length === 0) return;
+  // if user inter somthing then createtodo
+  const todo = {
+    id: Date.now().toString(),
+    todo: todoValue,
+    isComplete: "pending",
+  };
+  // after create todo push into list array
+  lists.push(todo);
 
+  localStorage.setItem(LIST_KEY, JSON.stringify(lists));
+  render();
+}
+// add todo via click on enter button
 window.addEventListener("keydown", function (e) {
   const key = e.keyCode;
   if (key == 13) {
@@ -38,73 +58,63 @@ window.addEventListener("keydown", function (e) {
   }
 });
 
-function save() {
-  localStorage.setItem(LIST_KEY, JSON.stringify(lists));
-}
-
-function createTodo(todoItem) {
-  return { id: Date.now().toString(), todo: todoItem, isComplete: "pending" };
-}
-
+// fetch todo and display on page
 function fetchTodoList(filter) {
-  clearContent(todoContainer);
+  // get access of left task and add value into it
   document.getElementById("left-task").innerHTML = lists.length + " task left";
+  // create empty li
   let li = "";
+  // check if lists not empty
   if (lists) {
     lists.forEach((list, id) => {
       var status = list.isComplete == "complete" ? "checked" : "pending";
       if (filter == list.isComplete || filter == "all") {
         li += `
-        <li data-todo-id=${list.id}>
+        <li data-todo-id=${list.id} >
         <label class="container">
         <input type="checkbox" id="${id}" onclick="isComplete(this)" ${status}>
         <span class="checkmark"></span>
         <h3>  ${list.todo}</h3>
         </label>
-      <span class="closeBtn" >\u00D7</span>
+      <span class="closeBtn" onclick="deleteTodo(${id})">\u00D7</span>
       </li>
       `;
       }
     });
   }
-
+  // after create li insert into todoContainer
   todoContainer.innerHTML = li || `<span>No task </span>`;
-
-  for (var i = 0; i < deleteTodoBtn.length; i++) {
-    deleteTodoBtn[i].onclick = function () {
-      const id = this.parentNode.getAttribute("data-todo-id");
-      deleteTodo(id);
-      this.parentNode.remove();
-    };
-  }
 }
 
-function deleteTodo(id) {
-  // console.log(id);
-  const todos = JSON.parse(localStorage.getItem("todo.list"));
-  const todoIndex = todos.findIndex((todo) => todo.id === id);
-  if (todoIndex !== -1) {
-    deleteItem = todos.splice(todoIndex, 1);
-  }
-  localStorage.setItem(LIST_KEY, JSON.stringify(todos));
-  // document.location.reload();
+// delete todo_function
+function deleteTodo(todoIndex) {
+  // remove the todo from array of localStorage
+  lists.splice(todoIndex, 1);
+  // after delete todo set remaining todos into exsting list
+  localStorage.setItem(LIST_KEY, JSON.stringify(lists));
+  render();
 }
 
+// mark todo_when click on checkbox
 function isComplete(seletedTask) {
   if (seletedTask.checked) {
+    // when checkbox is checked set iscomplete value to true
     lists[seletedTask.id].isComplete = "complete";
   } else {
+    // when checkbox is unchecked set iscomplete value to false
     lists[seletedTask.id].isComplete = "pending";
   }
+  // after seting value into todos update todo
   localStorage.setItem(LIST_KEY, JSON.stringify(lists));
 }
 
+// mark all todo_as a complete function
 function markAllCompleted() {
   for (var i = 0; i < lists.length; i++) {
     lists[i].isComplete = "complete";
   }
   localStorage.setItem(LIST_KEY, JSON.stringify(lists));
-  document.location.reload();
+  render();
 }
 
 function emptyList() {
@@ -112,12 +122,7 @@ function emptyList() {
   document.location.reload();
 }
 
-function clearContent(element) {
-  while (element.firstChild) {
-    element.removeChild(element.firstChild);
-  }
-}
-
+// function for fetchingToDo after every reload
 function render() {
   fetchTodoList("all");
 }
