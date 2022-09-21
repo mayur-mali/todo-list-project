@@ -35,6 +35,10 @@ body {
   outline: none;
 }
 
+img {
+  width: 40px;
+}
+
 #add-todo-btn {
   font-size: 30px;
   border-radius: 100%;
@@ -62,8 +66,64 @@ li {
 }
 
 li:hover {
-  background-color: rgb(209, 209, 209);
+  background-color: rgba(144, 91, 182, 0.438);
+  border-radius: 5px;
+}
+
+.container {
   cursor: pointer;
+}
+
+.container h3 {
+  margin-left: 45px;
+}
+
+.container input {
+  position: absolute;
+  top: 0;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.checkmark {
+  position: absolute;
+  width: 25px;
+  top: 15px;
+  left: 15px;
+  height: 25px;
+  background-color: rgb(235, 235, 235);
+  border-radius: 50%;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.container input:checked ~ h3 {
+  text-decoration: line-through;
+  color: #898989;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 15px;
+  top: -4px;
+  width: 5px;
+  height: 20px;
+  border: solid rgb(2, 2, 2);
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 
 .closeBtn {
@@ -76,8 +136,48 @@ li:hover {
   right: 0;
   top: 0;
   transition: all 0.5s;
+  opacity: 0;
+}
+
+li:hover > .closeBtn {
+  opacity: 1;
 }
 
 .closeBtn:hover {
   transform: rotate(90deg);
+}
+
+.filter-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.status-filter {
+  width: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.status-filter span {
+  text-transform: capitalize;
+  cursor: pointer;
+  color: #898989;
+}
+
+.active {
+  font-weight: 700;
+  color: black !important;
+}
+
+.task-action {
+  display: flex;
+  justify-content: space-between;
+  color: #898989;
+  margin-top: 15px;
+}
+
+.task-action h4 {
+  cursor: pointer;
 }
