@@ -107,7 +107,10 @@ function markAllCompleted() {
   document.location.reload();
 }
 
-function clearCompleted() {}
+function emptyList() {
+  localStorage.clear();
+  document.location.reload();
+}
 
 function clearContent(element) {
   while (element.firstChild) {
