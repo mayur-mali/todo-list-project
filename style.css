@@ -7,7 +7,7 @@
 body {
   background-color: rgb(230, 230, 230);
 }
-
+/* { main container start } */
 .todo-container {
   height: auto;
   padding: 20px;
@@ -17,6 +17,10 @@ body {
   margin: 10px auto;
   border-radius: 10px;
 }
+
+/* { main container end } */
+
+/* { todo input container start } */
 .todo-input {
   padding: 10px 20px;
   background-color: aliceblue;
@@ -52,7 +56,24 @@ img {
   background-color: rgba(0, 0, 0, 0.822);
   cursor: pointer;
 }
+/* { todo input container start } */
 
+/* { task action container start } */
+
+.task-action {
+  display: flex;
+  justify-content: space-between;
+  color: #898989;
+  margin-top: 15px;
+}
+
+.task-action h4 {
+  cursor: pointer;
+}
+
+/* { task action container end } */
+
+/* { todo list container start } */
 .todo-list {
   padding: 20px 0;
 }
@@ -70,15 +91,15 @@ li:hover {
   border-radius: 5px;
 }
 
-.container {
+.inputLable {
   cursor: pointer;
 }
 
-.container h3 {
+.inputLable h3 {
   margin-left: 45px;
 }
 
-.container input {
+.inputLable input {
   position: absolute;
   top: 0;
   opacity: 0;
@@ -104,17 +125,17 @@ li:hover {
 }
 
 /* Show the checkmark when checked */
-.container input:checked ~ .checkmark:after {
+.inputLable input:checked ~ .checkmark:after {
   display: block;
 }
 
-.container input:checked ~ h3 {
+.inputLable input:checked ~ h3 {
   text-decoration: line-through;
   color: #898989;
 }
 
 /* Style the checkmark/indicator */
-.container .checkmark:after {
+.inputLable .checkmark:after {
   left: 15px;
   top: -4px;
   width: 5px;
@@ -126,7 +147,7 @@ li:hover {
   transform: rotate(45deg);
 }
 
-.closeBtn {
+.deleteBtn {
   cursor: pointer;
   padding: 10px;
   position: absolute;
@@ -139,13 +160,17 @@ li:hover {
   opacity: 0;
 }
 
-li:hover > .closeBtn {
+li:hover > .deleteBtn {
   opacity: 1;
 }
 
-.closeBtn:hover {
+.deleteBtn:hover {
   transform: rotate(90deg);
 }
+
+/* { todo list container end } */
+
+/* { filter container start } */
 
 .filter-container {
   display: flex;
@@ -171,13 +196,4 @@ li:hover > .closeBtn {
   color: black !important;
 }
 
-.task-action {
-  display: flex;
-  justify-content: space-between;
-  color: #898989;
-  margin-top: 15px;
-}
-
-.task-action h4 {
-  cursor: pointer;
-}
+/* { filter container end } */

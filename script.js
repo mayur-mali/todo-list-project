@@ -26,7 +26,6 @@ var todoAddBtn = document.getElementById("add-todo-btn");
 todoAddBtn.addEventListener("click", function () {
   // add todo in list
   addToDoToList();
-
   // clear input after todo_created
   document.querySelector("input").value = "";
 });
@@ -62,7 +61,7 @@ window.addEventListener("keydown", function (e) {
 function fetchTodoList(filter) {
   // get access of left task and add value into it
   document.getElementById("left-task").innerHTML =
-    todoList.length + " task left";
+    todoList.length + " Total Task";
   // create empty li
   let li = "";
   // check if todoList not empty
@@ -72,19 +71,19 @@ function fetchTodoList(filter) {
       if (filter == list.isComplete || filter == "all") {
         li += `
         <li data-todo-id=${list.id} >
-        <label class="container">
-        <input type="checkbox" id="${id}" onclick="isComplete(this)" ${status}>
-        <span class="checkmark"></span>
-        <h3>  ${list.todo}</h3>
+        <label class="inputLable">
+          <input type="checkbox" id="${id}" onclick="isComplete(this)" ${status}>
+          <span class="checkmark"></span>
+          <h3>  ${list.todo}</h3>
         </label>
-      <span class="closeBtn" onclick="deleteTodo(${id})">\u00D7</span>
+      <span class="deleteBtn" onclick="deleteTodo(${id})">\u00D7</span>
       </li>
       `;
       }
     });
   }
   // after create li insert into todoContainer
-  todoContainer.innerHTML = li || `<span>No task </span>`;
+  todoContainer.innerHTML = li || `<span>No task</span>`;
 }
 
 // delete todo_function
