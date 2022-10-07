@@ -4,23 +4,11 @@ const LIST_KEY = "todo.list";
 // setting up the localStorage
 let todoList = JSON.parse(localStorage.getItem(LIST_KEY)) || [];
 
-//get access of deleteButton
-let deleteTodoBtn = document.getElementsByClassName("closeBtn");
-
-// get filter
-filters = document.querySelectorAll(".status-filter span");
-
-// filter by status
-filters.forEach((task) => {
-  task.addEventListener("click", function () {
-    document.querySelector("span.active").classList.remove("active");
-    task.classList.add("active");
-    fetchTodoList(task.id);
-  });
-});
-
 // get access of todo_add_button
 var todoAddBtn = document.getElementById("add-todo-btn");
+
+//get access of deleteButton
+let deleteTodoBtn = document.getElementById("deleteButton");
 
 // add event listener to add button
 todoAddBtn.addEventListener("click", function () {
@@ -76,7 +64,7 @@ function fetchTodoList(filter) {
           <span class="checkmark"></span>
           <h3>  ${list.todo}</h3>
         </label>
-      <span class="deleteBtn" onclick="deleteTodo(${id})">\u00D7</span>
+      <span class="deleteBtn" id="deleteButton" onclick="deleteTodo(${id})">\u00D7</span>
       </li>
       `;
       }
@@ -121,6 +109,18 @@ function emptyList() {
   localStorage.clear();
   document.location.reload();
 }
+
+// get filter
+filters = document.querySelectorAll(".status-filter span");
+
+// filter by status
+filters.forEach((task) => {
+  task.addEventListener("click", function () {
+    document.querySelector("span.active").classList.remove("active");
+    task.classList.add("active");
+    fetchTodoList(task.id);
+  });
+});
 
 // function for fetchingToDo after every reload
 function render() {
